@@ -38,12 +38,16 @@ export default class LinksController {
   }
 
   async read({ request, response }: HttpContextContract): Promise<void> {
-    const { onlyFixed = false, page = 1, limit = 10 } = request.qs()
+    const { onlyFixed, page = 1, limit = 10 } = request.qs()
     try {
       const links = await Database.from('links')
         .where((builder) => {
           if (onlyFixed === 'true') {
             builder.where('is_fixed', true)
+          }
+
+          if (onlyFixed === 'false') {
+            builder.where('is_fixed', false)
           }
         })
         .orderBy('created_at', 'desc')
