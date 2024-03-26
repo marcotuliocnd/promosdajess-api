@@ -27,6 +27,7 @@ export default class CreateLinkValidator {
     title: schema.string({}, [rules.required()]),
     link: schema.string({}, [rules.required()]),
     isFixed: schema.boolean.optional(),
+    index: schema.number.optional(),
   })
 
   /**

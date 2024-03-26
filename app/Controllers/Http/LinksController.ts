@@ -6,9 +6,9 @@ import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class LinksController {
   async create({ request, response }: HttpContextContract): Promise<void> {
-    const { title, link, isFixed = false } = await request.validate(CreateLinkValidator)
+    const { title, link, isFixed = false, index = 99 } = await request.validate(CreateLinkValidator)
     try {
-      const createdLink = await Link.create({ title, link, isFixed })
+      const createdLink = await Link.create({ title, link, isFixed, index })
       return response.ok(createdLink)
     } catch (error) {
       Logger.error(error.message)
@@ -62,7 +62,7 @@ export default class LinksController {
   }
 
   async update({ request, response }: HttpContextContract): Promise<void> {
-    const { title, link, isFixed } = request.body()
+    const { title, link, isFixed, index } = request.body()
     const { id } = request.params()
     try {
       const updateObject: any = {}
@@ -70,6 +70,7 @@ export default class LinksController {
       if (title) updateObject.title = title
       if (link) updateObject.link = link
       if (isFixed !== null && isFixed !== undefined) updateObject.isFixed = isFixed
+      if (index !== null && index !== undefined) updateObject.index = index
 
       const updatedLink = await Link.updateOrCreate({ id }, updateObject)
       return response.ok(updatedLink)

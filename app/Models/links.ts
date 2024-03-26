@@ -14,6 +14,9 @@ export default class Links extends BaseModel {
   @column({ columnName: 'is_fixed' })
   public isFixed: boolean
 
+  @column()
+  public index: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
