@@ -50,7 +50,7 @@ export default class LinksController {
             builder.where('is_fixed', false)
           }
         })
-        .orderBy('created_at', 'desc')
+        .orderBy('index', 'asc')
         .paginate(page, limit)
       return response.ok(links)
     } catch (error) {
